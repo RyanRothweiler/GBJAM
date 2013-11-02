@@ -1,0 +1,2 @@
+void initBkgMusic();
+void music();
