@@ -1,6 +1,6 @@
 /*
 
- BACKGROUND.H
+ BACKGROUNDTILES.H
 
  Include File.
 
@@ -102,4 +102,4 @@ extern unsigned char BackgroundTilesCGB[];
 /* Start of tile array. */
 extern unsigned char BackgroundTiles[];
 
-/* End of BACKGROUND.H */
+/* End of BACKGROUNDTILES.H */
