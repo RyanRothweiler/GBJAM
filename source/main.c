@@ -1,25 +1,39 @@
-//includes
+//----------------------------------------includes
 #include "stdio.h"
 #include "gb.h"
 
-#include "player.c"
 #include "background.c"
+#include "player.c"
 
 
-//some general global game settings
+
+
+//----------------------------------------Variables
+int SpriteNum = 0; //this holds the number of sprites and is used to identify which sprite
+int num = 0; //general number
+
+
+
+
+//----------------------------------------Methods
 void SetupGame()
 {
 	DISPLAY_OFF;
 	SPRITES_8x8; //set sprite size
 
 	BackgroundLoad(); //load background stuff
-	PlayerLoad(); //load player stuff
+	PlayerLoad(SpriteNum); //load player stuff
 
 	SHOW_BKG;
 	SHOW_SPRITES;
 	DISPLAY_ON;
 }
 
+
+
+
+
+//----------------------------------------Game Loop
 int main()
 {
 	SetupGame();
@@ -27,12 +41,14 @@ int main()
 	//this is the game loop. this loops forever.
 	while (1)
 	{
-		//background stuff
-		BackgroundUpdate();
-
 		//player stuff
-		PlayerCheckControls();
-		PlayerUpdate();
+		num = PlayerCheckControls(SpriteNum);
+		if (num == 1) //then a bullet was instantiated
+		{
+			SpriteNum++;
+		}
+
+		PlayerUpdate(SpriteNum); 
 		
 		//woah there sparky
 		delay(20);

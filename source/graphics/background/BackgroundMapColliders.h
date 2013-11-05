@@ -1,6 +1,6 @@
 /*
 
- BACKGROUNDMAP.H
+ BACKGROUNDMAPCOLLIDERS.H
 
  Map Include File.
 
@@ -18,10 +18,10 @@
 
 */
 
-#define BackgroundMapWidth 25
-#define BackgroundMapHeight 27
-#define BackgroundMapBank 0
+#define BackgroundMapCollidersWidth 25
+#define BackgroundMapCollidersHeight 27
+#define BackgroundMapCollidersBank 0
 
-extern unsigned char BackgroundMap[];
+extern unsigned char BackgroundMapColliders[];
 
-/* End of BACKGROUNDMAP.H */
+/* End of BACKGROUNDMAPCOLLIDERS.H */
