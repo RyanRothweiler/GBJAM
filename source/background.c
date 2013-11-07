@@ -12,14 +12,52 @@
 
 
 //----------------------------------------Variables
+int B_BackgroundOffsetX = 0;
+int B_BackgroundOffsetY = 0;
 
 
 
 
 
 //----------------------------------------General Methods
+//moves the background up the amount given
+void BackgroundMoveUp(int speed, int SpriteNum)
+{
+	scroll_bkg(0, speed);
+	B_BackgroundOffsetY += speed;
+	MonsterMoveUp(0, SpriteNum);
+}
+
+//move background down the amount given
+void BackgroundMoveDown(int speed, int SpriteNum)
+{
+	scroll_bkg(0, speed * -1);
+	B_BackgroundOffsetY += speed * -1;
+	MonsterMoveDown(0, SpriteNum);
+}
+
+//move background right the amount given
+void BackgroundMoveRight(int speed, int SpriteNum)
+{
+	scroll_bkg(speed * -1, 0);
+	B_BackgroundOffsetX += speed * -1;
+	MonsterMoveRight(0, SpriteNum);
+}
+
+//move background left the amount given
+void BackgroundMoveLeft(int speed, int SpriteNum)
+{
+	scroll_bkg(speed, 0);
+	B_BackgroundOffsetX += speed;
+	MonsterMoveLeft(0, SpriteNum);
+}
+
+//checks if the given position collides with anything
 int CheckCollision(int x, int y, int down, int right)
 {
+	y += B_BackgroundOffsetY;
+	x += B_BackgroundOffsetX;
+
 	if (!down && !right) //if either check up or left
 	{
 		if (BackgroundMapColliders[(((y - 18) / 8)*BackgroundMapCollidersWidth) + ((x - 9) / 8)] == 0x01) //collides

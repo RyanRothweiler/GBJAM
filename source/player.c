@@ -4,8 +4,8 @@
 
 
 //----------------------------------------Variables
-int P_PosX = 40; //players position in x screen space
-int P_PosY = 40; //players position in y screen space
+int P_PosX = 80; //players position in x screen space
+int P_PosY = 72; //players position in y screen space
 int P_Direction = 0; // clockwise starting up with 1
 int P_MovementSpeed = 1; //the number of pixels the player moves each time she is moved
 int P_Strafing = 0; //if the character is strafing or not
@@ -19,31 +19,13 @@ int P_Num = 0; //general number for player
 
 
 
-
-//----------------------------------------Get Methods
-//returns playes y position in pixels
-int PlayerPosX()
-{
-	return P_PosX;
-}
-
-//returns players y position in pixels
-int PlayerPosY()
-{
-	return P_PosY;
-}
-
-
-
-
 //----------------------------------------Movement Methods
 //move the player up
-void PlayerMoveUp(int SpriteNum, int changeDir)
+void PlayerMoveUp(int changeDir, int SpriteNum)
 {
 	if (!CheckCollision(P_PosX, P_PosY - P_MovementSpeed, 0, 0)) //doesn't collide
 	{
-		P_PosY -= P_MovementSpeed;
-		move_sprite(SpriteNum, P_PosX, P_PosY);
+		BackgroundMoveDown(P_MovementSpeed, SpriteNum);
 		if (changeDir)
 		{
 			P_FrameIndex = 0;
@@ -53,12 +35,11 @@ void PlayerMoveUp(int SpriteNum, int changeDir)
 }
 
 //move the player down
-void PlayerMoveDown(int SpriteNum, int changeDir)
+void PlayerMoveDown(int changeDir, int SpriteNum)
 {
-	if (!CheckCollision(P_PosX, P_PosY + P_MovementSpeed, 1, 0)) //doesn't collide
+	if (!CheckCollision(P_PosX, P_PosY + 1, 1, 0)) //doesn't collide
 	{
-		P_PosY += P_MovementSpeed;
-		move_sprite(SpriteNum, P_PosX, P_PosY);
+		BackgroundMoveUp(P_MovementSpeed, SpriteNum);
 		if (changeDir)
 		{
 			P_FrameIndex = 2;
@@ -68,12 +49,12 @@ void PlayerMoveDown(int SpriteNum, int changeDir)
 }
 
 //move the player right
-void PlayerMoveRight(int SpriteNum, int changeDir)
+void PlayerMoveRight(int changeDir, int SpriteNum)
 {
-	if (!CheckCollision(P_PosX + P_MovementSpeed, P_PosY, 0, 1)) //doesn't collide
+	//for some reason putting P_MovementSpeed in for 1 has problems. idk why
+	if (!CheckCollision(P_PosX + 1, P_PosY, 0, 1)) //doesn't collide
 	{
-		P_PosX += P_MovementSpeed;
-		move_sprite(SpriteNum, P_PosX, P_PosY);
+		BackgroundMoveLeft(P_MovementSpeed, SpriteNum);
 		if (changeDir)
 		{
 			P_FrameIndex = 1;
@@ -83,12 +64,11 @@ void PlayerMoveRight(int SpriteNum, int changeDir)
 }
 
 //move the player left
-void PlayerMoveLeft(int SpriteNum, int changeDir)
+void PlayerMoveLeft(int changeDir, int SpriteNum)
 {
 	if (!CheckCollision(P_PosX - P_MovementSpeed, P_PosY, 0, 0)) //doesn't collide
 	{
-		P_PosX -= P_MovementSpeed;
-		move_sprite(SpriteNum, P_PosX, P_PosY);
+		BackgroundMoveRight(P_MovementSpeed, SpriteNum);
 		if (changeDir)
 		{
 			P_FrameIndex = 3;
@@ -98,44 +78,44 @@ void PlayerMoveLeft(int SpriteNum, int changeDir)
 }
 
 //slides the player back (back being relative to whatever her current direction is)
-void PlayerSlideBack(int SpriteNum)
+void PlayerSlideBack()
 {
 	if (P_Direction == 1)
 	{
-		PlayerMoveDown(SpriteNum, 0);
+		PlayerMoveDown(0);
 	}
 	if (P_Direction == 2)
 	{
-		PlayerMoveLeft(SpriteNum, 0);
+		PlayerMoveLeft(0);
 	}
 	if (P_Direction == 3)
 	{
-		PlayerMoveUp(SpriteNum, 0);
+		PlayerMoveUp(0);
 	}
 	if (P_Direction == 4)
 	{
-		PlayerMoveRight(SpriteNum, 0);
+		PlayerMoveRight(0);
 	}
 }
 
 //slides the player forward (forward being relative to whatever her current direction is)
-void PlayerSlideForward(int SpriteNum)
+void PlayerSlideForward()
 {
 	if (P_Direction == 1)
 	{
-		PlayerMoveUp(SpriteNum, 0);
+		PlayerMoveUp(0);
 	}
 	if (P_Direction == 2)
 	{
-		PlayerMoveRight(SpriteNum, 0);
+		PlayerMoveRight(0);
 	}
 	if (P_Direction == 3)
 	{
-		PlayerMoveDown(SpriteNum, 0);
+		PlayerMoveDown(0);
 	}
 	if (P_Direction == 4)
 	{
-		PlayerMoveLeft(SpriteNum, 0);
+		PlayerMoveLeft(0);
 	}
 }
 
@@ -151,96 +131,96 @@ int PlayerCheckControls(int SpriteNum) //returns. 0 - nothing, 1 - a bullet was 
 	{
 		if (P_Strafing)
 		{
-			PlayerMoveUp(SpriteNum, 0);
+			PlayerMoveUp(0, SpriteNum);
 		}
 		else
 		{
-			PlayerMoveUp(SpriteNum, 1);
+			PlayerMoveUp(1, SpriteNum);
 		}
 	}
 	if (joykey == 8) //down
 	{
 		if (P_Strafing)
 		{
-			PlayerMoveDown(SpriteNum, 0);
+			PlayerMoveDown(0, SpriteNum);
 		}
 		else
 		{
-			PlayerMoveDown(SpriteNum, 1);
+			PlayerMoveDown(1, SpriteNum);
 		}
 	}
 	if (joykey == 2) //left
 	{
 		if (P_Strafing)
 		{
-			PlayerMoveLeft(SpriteNum, 0);
+			PlayerMoveLeft(0, SpriteNum);
 		}
 		else
 		{
-			PlayerMoveLeft(SpriteNum, 1);
+			PlayerMoveLeft(1, SpriteNum);
 		}
 	}
 	if (joykey == 1) //right
 	{
 		if (P_Strafing)
 		{
-			PlayerMoveRight(SpriteNum, 0);
+			PlayerMoveRight(0, SpriteNum);
 		}
 		else
 		{
-			PlayerMoveRight(SpriteNum, 1);
+			PlayerMoveRight(1, SpriteNum);
 		}
 	}
 	if (joykey == 5) //northeast
 	{
 		if (P_Strafing)
 		{
-			PlayerMoveUp(SpriteNum, 0);
-			PlayerMoveRight(SpriteNum, 0);
+			PlayerMoveUp(0, SpriteNum);
+			PlayerMoveRight(0, SpriteNum);
 		}
 		else
 		{
-			PlayerMoveUp(SpriteNum, 1);
-			PlayerMoveRight(SpriteNum, 1);
+			PlayerMoveUp(1, SpriteNum);
+			PlayerMoveRight(1, SpriteNum);
 		}
 	}
 	if (joykey == 9) //southeast
 	{
 		if (P_Strafing)
 		{
-			PlayerMoveDown(SpriteNum, 0);
-			PlayerMoveRight(SpriteNum, 0);
+			PlayerMoveDown(0, SpriteNum);
+			PlayerMoveRight(0, SpriteNum);
 		}
 		else
 		{
-			PlayerMoveDown(SpriteNum, 1);
-			PlayerMoveRight(SpriteNum, 1);
+			PlayerMoveDown(1, SpriteNum);
+			PlayerMoveRight(1, SpriteNum);
 		}
 	}
 	if (joykey == 10) //southwest
 	{
 		if (P_Strafing)
 		{
-			PlayerMoveDown(SpriteNum, 0);
-			PlayerMoveLeft(SpriteNum, 0);
+			PlayerMoveDown(0, SpriteNum);
+			PlayerMoveLeft(0, SpriteNum);
 		}
 		else
 		{
-			PlayerMoveDown(SpriteNum, 1);
-			PlayerMoveLeft(SpriteNum, 1);
+			PlayerMoveDown(1, SpriteNum);
+			PlayerMoveLeft(1, SpriteNum);
 		}
 	}
 	if (joykey == 6) //northwest
 	{
 		if (P_Strafing)
 		{
-			PlayerMoveUp(SpriteNum, 0);
-			PlayerMoveLeft(SpriteNum, 0);
+			PlayerMoveUp(0, SpriteNum);
+			PlayerMoveLeft(0, SpriteNum);
 		}
 		else
 		{
-			PlayerMoveUp(SpriteNum, 1);
-			PlayerMoveLeft(SpriteNum, 1);
+			PlayerMoveUp(1, SpriteNum);
+			PlayerMoveLeft(1, SpriteNum);
 		}
 	}
 
@@ -253,11 +233,11 @@ int PlayerCheckControls(int SpriteNum) //returns. 0 - nothing, 1 - a bullet was 
 	{
 		if (P_Strafing)
 		{
-			PlayerMoveUp(SpriteNum, 0);
+			PlayerMoveUp(0, SpriteNum);
 		}
 		else
 		{
-			PlayerMoveUp(SpriteNum, 1);
+			PlayerMoveUp(1, SpriteNum);
 		}
 		return GunFire(P_PosX, P_PosY, P_Direction);
 	}
@@ -265,11 +245,11 @@ int PlayerCheckControls(int SpriteNum) //returns. 0 - nothing, 1 - a bullet was 
 	{
 		if (P_Strafing)
 		{
-			PlayerMoveDown(SpriteNum, 0);
+			PlayerMoveDown(0, SpriteNum);
 		}
 		else
 		{
-			PlayerMoveDown(SpriteNum, 1);
+			PlayerMoveDown(1, SpriteNum);
 		}
 		return GunFire(P_PosX, P_PosY, P_Direction);
 	}
@@ -277,11 +257,11 @@ int PlayerCheckControls(int SpriteNum) //returns. 0 - nothing, 1 - a bullet was 
 	{
 		if (P_Strafing)
 		{
-			PlayerMoveRight(SpriteNum, 0);
+			PlayerMoveRight(0, SpriteNum);
 		}
 		else
 		{
-			PlayerMoveRight(SpriteNum, 1);
+			PlayerMoveRight(1, SpriteNum);
 		}
 		return GunFire(P_PosX, P_PosY, P_Direction);
 	}
@@ -289,11 +269,11 @@ int PlayerCheckControls(int SpriteNum) //returns. 0 - nothing, 1 - a bullet was 
 	{
 		if (P_Strafing)
 		{
-			PlayerMoveLeft(SpriteNum, 0);
+			PlayerMoveLeft(0, SpriteNum);
 		}
 		else
 		{
-			PlayerMoveLeft(SpriteNum, 1);
+			PlayerMoveLeft(1, SpriteNum);
 		}
 		return GunFire(P_PosX, P_PosY, P_Direction);
 	}
@@ -328,7 +308,7 @@ int PlayerCheckControls(int SpriteNum) //returns. 0 - nothing, 1 - a bullet was 
 			}
 			P_StrafeToggle = 0;
 		}
-		PlayerMoveUp(SpriteNum, 0);
+		PlayerMoveUp(0);
 	}
 	if (joykey == 40) //down and B
 	{
@@ -344,7 +324,7 @@ int PlayerCheckControls(int SpriteNum) //returns. 0 - nothing, 1 - a bullet was 
 			}
 			P_StrafeToggle = 0;
 		}
-		PlayerMoveDown(SpriteNum, 0);
+		PlayerMoveDown(0);
 	}
 	if (joykey == 33) //right and B
 	{
@@ -360,7 +340,7 @@ int PlayerCheckControls(int SpriteNum) //returns. 0 - nothing, 1 - a bullet was 
 			}
 			P_StrafeToggle = 0;
 		}
-		PlayerMoveRight(SpriteNum, 0);
+		PlayerMoveRight(0);
 	}
 	if (joykey == 34) //left and B
 	{
@@ -376,7 +356,7 @@ int PlayerCheckControls(int SpriteNum) //returns. 0 - nothing, 1 - a bullet was 
 			}
 			P_StrafeToggle = 0;
 		}
-		PlayerMoveLeft(SpriteNum, 0);
+		PlayerMoveLeft(0);
 	}
 	//reset strafe toggle
 	if ((joykey != 32) && (joykey != 36) && (joykey != 40) && (joykey != 3) && (joykey != 34))
@@ -395,6 +375,8 @@ int PlayerUpdate(int SpriteNum) //0 - nothing happened, 1 - bullet died
 {
 	//set the sprite
 	set_sprite_tile(SpriteNum, P_FrameIndex);
+	move_sprite(SpriteNum, 0, 0);
+	move_sprite(SpriteNum, P_PosX, P_PosY);
 
 	//update gun stuff
 	GunUpdate();
@@ -404,10 +386,10 @@ int PlayerUpdate(int SpriteNum) //0 - nothing happened, 1 - bullet died
 }
 
 //loads the player sprites (this doesn't increment sprite num since it starts at 0
-void PlayerLoad(int SpriteNum)
+void PlayerLoad()
 {
 	//load sprite data
 	set_sprite_tile(0, P_FrameIndex);
 
-	PlayerMoveUp(SpriteNum, 1);
+	move_sprite(0, P_PosX, P_PosY);
 }

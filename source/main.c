@@ -4,6 +4,7 @@
 #include "rand.h"
 #include "time.h"
 
+#include "monster.c"
 #include "background.c"
 #include "player.c"
 
@@ -26,13 +27,15 @@ void SetupGame()
 	DISPLAY_OFF;
 	SPRITES_8x8; //set sprite size
 
-	set_sprite_data(0, 27, SpriteTiles); //load sprites
-
 	BackgroundLoad(); //load background stuff
-	PlayerLoad(SpriteNum); //load player stuff
-
 	SHOW_BKG;
+
+	set_sprite_data(0, 47, SpriteTiles); //load sprites
+	PlayerLoad(); //load player stuff
+	MonsterLoad(); //loads the monster
+	SpriteNum += 4;
 	SHOW_SPRITES;
+	
 	DISPLAY_ON;
 }
 
@@ -48,26 +51,33 @@ int main()
 	//this is the game loop. this loops forever.
 	while (1)
 	{
+		SHOW_SPRITES;
+
+		//monster stuff
+		MonsterUpdate(SpriteNum);
+
+
 		//player stuff
 		num = PlayerCheckControls(SpriteNum);
 		if (num == 1) //then a bullet was instantiated
 		{
 			SpriteNum++;
-			PlayerSlideBack(SpriteNum);
-			PlayerSlideBack(SpriteNum);
-			PlayerSlideBack(SpriteNum);
-			PlayerSlideBack(SpriteNum);
+			PlayerSlideBack();
+			PlayerSlideBack();
+			PlayerSlideBack();
+			PlayerSlideBack();
+			PlayerUpdate(SpriteNum);
 		}
 
-		num = PlayerUpdate(SpriteNum); //then a bullet died
-		if (num == 1)
+		num = PlayerUpdate(SpriteNum); 
+		if (num == 1) //then a bullet died
 		{
-			set_sprite_tile(SpriteNum, 4);
+			set_sprite_tile(SpriteNum, 4); //hide the players current sprite
 			SpriteNum--;
-			PlayerSlideBack(SpriteNum);
-			PlayerSlideForward(SpriteNum);
-		}
-		
+			move_sprite(SpriteNum, P_PosX, P_PosY); //and show the new one
+
+			HIDE_SPRITES; //clear unused sprites
+		}		
 		
 		//woah there sparky
 		delay(20);

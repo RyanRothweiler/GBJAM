@@ -5,7 +5,7 @@
 
 //----------------------------------------Variables
 int B_BulletNum = 0; //the number of bullets on screen
-int B_BulletSpeed = 10; //the number of pixels to move the bullet each frame
+int B_BulletSpeed = 13; //the number of pixels to move the bullet each frame
 int B_Num = 0; //a basic number
 
 //bullet sprite number id's. These change as bullets are create and destroyed, but they always represent the bullets sprite number
@@ -13,6 +13,7 @@ int B1_SpriteID = 0;
 int B2_SpriteID = 0;
 int B3_SpriteID = 0;
 int B4_SpriteID = 0;
+int B5_SpriteID = 0;
 
 //bullet1 info
 int B1_Using = 0;
@@ -41,7 +42,7 @@ int B3_Animating = 0;
 int B3_Dir = 0; //1 - north, 2 - east, 3 - south, 4 - west
 int B3_Dead = 0; //if this bulleth as hit something and shold be playing the death animation
 
-//bullet3 info
+//bullet4 info
 int B4_Using = 0;
 int B4_PosX = 0;
 int B4_PosY = 0;
@@ -49,6 +50,15 @@ int B4_FrameIndex = 5;
 int B4_Animating = 0;
 int B4_Dir = 0; //1 - north, 2 - east, 3 - south, 4 - west
 int B4_Dead = 0; //if this bulleth as hit something and shold be playing the death animation
+
+//bullet4 info
+int B5_Using = 0;
+int B5_PosX = 0;
+int B5_PosY = 0;
+int B5_FrameIndex = 5;
+int B5_Animating = 0;
+int B5_Dir = 0; //1 - north, 2 - east, 3 - south, 4 - west
+int B5_Dead = 0; //if this bulleth as hit something and shold be playing the death animation
 
 
 
@@ -80,6 +90,12 @@ void BulletSlideSpriteIDsUp()
 	{
 		set_sprite_tile(B4_SpriteID, B4_FrameIndex);
 	}
+
+	B5_SpriteID++;
+	if (B5_Using)
+	{
+		set_sprite_tile(B5_SpriteID, B5_FrameIndex);
+	}
 }
 
 //this subtractws one from every sprite whos ID is larger than the given number, thus removing a sprite
@@ -100,6 +116,10 @@ void BulletSlideSpriteIDsDown(int num)
 	if (B4_SpriteID > num)
 	{
 		B4_SpriteID--;
+	}
+	if (B5_SpriteID > num)
+	{
+		B5_SpriteID--;
 	}
 }
 
@@ -178,6 +198,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 		}
 		else //else this bullet is dead and should be playing the death animation
 		{
+			B_BulletNum--;
 			if (B1_Dir == 1) //up
 			{
 				if (B1_FrameIndex < (5 + 5)) //still alive
@@ -309,6 +330,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 		}
 		else //else this bullet is dead and should be playing the death animation
 		{
+			B_BulletNum--;
 			if (B2_Dir == 1) //up
 			{
 				if (B2_FrameIndex < (5 + 5)) //still alive
@@ -440,6 +462,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 		}
 		else //else this bullet is dead and should be playing the death animation
 		{
+			B_BulletNum--;
 			if (B3_Dir == 1) //up
 			{
 				if (B3_FrameIndex < (5 + 5)) //still alive
@@ -571,6 +594,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 		}
 		else //else this bullet is dead and should be playing the death animation
 		{
+			B_BulletNum--;
 			if (B4_Dir == 1) //up
 			{
 				if (B4_FrameIndex < (5 + 5)) //still alive
@@ -629,6 +653,137 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 		}
 	}
+	if (B5_Using)
+	{
+		if (!B5_Dead)
+		{
+			//moving up
+			if (B5_Dir == 1)
+			{
+				if (!CheckCollision(B5_PosX, B5_PosY - B_BulletSpeed, 1, 0) && !CheckCollision(B5_PosX, B5_PosY - (B_BulletSpeed / 2), 1, 0) && !CheckCollision(B5_PosX, B5_PosY - (B_BulletSpeed / 3), 1, 0))
+				{
+					B5_PosY -= B_BulletSpeed;
+				}
+				else
+				{
+					//snap the nearest grid
+					B_Num = B5_PosY % 8;
+					B5_PosY = (B5_PosY - (8 - B_Num)) + 8;
+
+					B5_Dead = 1;
+				}
+			}
+			//moving down
+			if (B5_Dir == 3)
+			{
+				if (!CheckCollision(B5_PosX, B5_PosY + B_BulletSpeed, 1, 0) && !CheckCollision(B5_PosX, B5_PosY + (B_BulletSpeed / 2), 1, 0) && !CheckCollision(B5_PosX, B5_PosY + (B_BulletSpeed / 3), 1, 0))
+				{
+					B5_PosY += B_BulletSpeed;
+				}
+				else
+				{
+					//snap the nearest grid
+					B_Num = B5_PosY % 8;
+					B5_PosY = (B5_PosY + (8 - B_Num));
+
+					B5_Dead = 1;
+				}
+			}
+			//moving right
+			if (B5_Dir == 2)
+			{
+				if (!CheckCollision(B5_PosX + B_BulletSpeed, B5_PosY, 1, 0) && !CheckCollision(B5_PosX + (B_BulletSpeed / 2), B5_PosY, 1, 0) && !CheckCollision(B5_PosX + (B_BulletSpeed / 3), B5_PosY, 1, 0))
+				{
+					B5_PosX += B_BulletSpeed;
+				}
+				else
+				{
+					//snap the nearest grid
+					B_Num = B5_PosX % 8;
+					B5_PosX = (B5_PosX + (8 - B_Num));
+
+					B5_Dead = 1;
+				}
+			}
+			//moving left
+			if (B5_Dir == 4)
+			{
+				if (!CheckCollision(B5_PosX - B_BulletSpeed, B5_PosY, 1, 0) && !CheckCollision(B5_PosX - (B_BulletSpeed / 2), B5_PosY, 1, 0) && !CheckCollision(B5_PosX - (B_BulletSpeed / 3), B5_PosY, 1, 0))
+				{
+					B5_PosX -= B_BulletSpeed;
+				}
+				else
+				{
+					//snap the nearest grid
+					B_Num = B5_PosX % 8;
+					B5_PosX = (B5_PosX - (8 - B_Num) + 8);
+
+					B5_Dead = 1;
+				}
+			}
+			move_sprite(B5_SpriteID, B5_PosX, B5_PosY);
+		}
+		else //else this bullet is dead and should be playing the death animation
+		{
+			B_BulletNum--;
+			if (B5_Dir == 1) //up
+			{
+				if (B5_FrameIndex < (5 + 5)) //still alive
+				{
+					B5_FrameIndex++;
+					set_sprite_tile(B5_SpriteID, B5_FrameIndex);
+				}
+				else //else dead
+				{
+					BulletSlideSpriteIDsDown(B5_SpriteID);
+					B5_Using = 0;
+					return 1;
+				}
+			}
+			if (B5_Dir == 2) //right
+			{
+				if (B5_FrameIndex < (11 + 5)) //still alive
+				{
+					B5_FrameIndex++;
+					set_sprite_tile(B5_SpriteID, B5_FrameIndex);
+				}
+				else //else dead
+				{
+					BulletSlideSpriteIDsDown(B5_SpriteID);
+					B5_Using = 0;
+					return 1;
+				}
+			}
+			if (B5_Dir == 3) //down
+			{
+				if (B5_FrameIndex < (17 + 5)) //still alive
+				{
+					B5_FrameIndex++;
+					set_sprite_tile(B5_SpriteID, B5_FrameIndex);
+				}
+				else //else dead
+				{
+					BulletSlideSpriteIDsDown(B5_SpriteID);
+					B5_Using = 0;
+					return 1;
+				}
+			}
+			if (B5_Dir == 4) //left
+			{
+				if (B5_FrameIndex < (23 + 5)) //still alive
+				{
+					B5_FrameIndex++;
+					set_sprite_tile(B5_SpriteID, B5_FrameIndex);
+				}
+				else //else dead
+				{
+					BulletSlideSpriteIDsDown(B5_SpriteID);
+					B5_Using = 0;
+					return 1;
+				}
+			}
+		}
+	}
 	return 0;
 }
 
@@ -646,6 +801,7 @@ void BulletsAdd(int x, int y, int direction)
 		B1_Animating = 0;
 		B1_Dir = direction;
 		B1_Dead = 0;
+		B_BulletNum++;
 
 		//sprite stuff
 		if (B1_Dir == 1) //up
@@ -683,6 +839,7 @@ void BulletsAdd(int x, int y, int direction)
 		B2_Animating = 0;
 		B2_Dir = direction;
 		B2_Dead = 0;
+		B_BulletNum++;
 
 		//sprite stuff
 		if (B2_Dir == 1) //up
@@ -720,6 +877,7 @@ void BulletsAdd(int x, int y, int direction)
 		B3_Animating = 0;
 		B3_Dir = direction;
 		B3_Dead = 0;
+		B_BulletNum++;
 
 		//sprite stuff
 		if (B3_Dir == 1) //up
@@ -757,6 +915,7 @@ void BulletsAdd(int x, int y, int direction)
 		B4_Animating = 0;
 		B4_Dir = direction;
 		B4_Dead = 0;
+		B_BulletNum++;
 
 		//sprite stuff
 		if (B4_Dir == 1) //up
@@ -778,6 +937,44 @@ void BulletsAdd(int x, int y, int direction)
 		{
 			set_sprite_tile(0, 23);
 			B4_FrameIndex = 23;
+		}
+		move_sprite(0, x, y);
+		return;
+	}
+
+	if (!B5_Using) //bullet 1
+	{
+		//data stuff
+		BulletSlideSpriteIDsUp();
+		B5_SpriteID = 0;
+		B5_Using = 1;
+		B5_PosX = x;
+		B5_PosY = y;
+		B5_Animating = 0;
+		B5_Dir = direction;
+		B5_Dead = 0;
+		B_BulletNum++;
+
+		//sprite stuff
+		if (B5_Dir == 1) //up
+		{
+			set_sprite_tile(0, 5);
+			B5_FrameIndex = 5;
+		}
+		if (B5_Dir == 2) //right
+		{
+			set_sprite_tile(0, 11);
+			B5_FrameIndex = 11;
+		}
+		if (B5_Dir == 3) //down
+		{
+			set_sprite_tile(0, 17);
+			B5_FrameIndex = 17;
+		}
+		if (B5_Dir == 4) //left
+		{
+			set_sprite_tile(0, 23);
+			B5_FrameIndex = 23;
 		}
 		move_sprite(0, x, y);
 		return;
