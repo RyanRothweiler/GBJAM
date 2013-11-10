@@ -30,7 +30,7 @@ void SetupGame()
 	BackgroundLoad(); //load background stuff
 	SHOW_BKG;
 
-	set_sprite_data(0, 47, SpriteTiles); //load sprites
+	set_sprite_data(0, 48, SpriteTiles); //load sprites
 	PlayerLoad(); //load player stuff
 	MonsterLoad(); //loads the monster
 	SpriteNum += 4;
@@ -56,7 +56,6 @@ int main()
 		//monster stuff
 		MonsterUpdate(SpriteNum);
 
-
 		//player stuff
 		num = PlayerCheckControls(SpriteNum);
 		if (num == 1) //then a bullet was instantiated
@@ -67,16 +66,16 @@ int main()
 			PlayerSlideBack();
 			PlayerSlideBack();
 			PlayerUpdate(SpriteNum);
+
+			HIDE_SPRITES; //clear unused sprites
 		}
 
 		num = PlayerUpdate(SpriteNum); 
 		if (num == 1) //then a bullet died
 		{
-			set_sprite_tile(SpriteNum, 4); //hide the players current sprite
+			set_sprite_tile(SpriteNum, 5); //hide the players current sprite
 			SpriteNum--;
-			move_sprite(SpriteNum, P_PosX, P_PosY); //and show the new one
-
-			HIDE_SPRITES; //clear unused sprites
+			move_sprite(SpriteNum, P_PosX, P_PosY); //and show the new 
 		}		
 		
 		//woah there sparky

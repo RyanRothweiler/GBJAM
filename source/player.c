@@ -11,7 +11,7 @@ int P_MovementSpeed = 1; //the number of pixels the player moves each time she i
 int P_Strafing = 0; //if the character is strafing or not
 int P_StrafeToggle = 1; //1 for can toggle 0 for can't
 
-int P_FrameIndex = 0; //the tile number
+int P_FrameIndex = 1; //the tile number
 
 int joykey = 0; //holds which buttons are being pressed
 int P_Num = 0; //general number for player
@@ -25,10 +25,11 @@ void PlayerMoveUp(int changeDir, int SpriteNum)
 {
 	if (!CheckCollision(P_PosX, P_PosY - P_MovementSpeed, 0, 0)) //doesn't collide
 	{
+		BulletMoveDown(P_MovementSpeed);
 		BackgroundMoveDown(P_MovementSpeed, SpriteNum);
 		if (changeDir)
 		{
-			P_FrameIndex = 0;
+			P_FrameIndex = 1;
 			P_Direction = 1;
 		}
 	}
@@ -39,10 +40,11 @@ void PlayerMoveDown(int changeDir, int SpriteNum)
 {
 	if (!CheckCollision(P_PosX, P_PosY + 1, 1, 0)) //doesn't collide
 	{
+		BulletMoveUp(P_MovementSpeed);
 		BackgroundMoveUp(P_MovementSpeed, SpriteNum);
 		if (changeDir)
 		{
-			P_FrameIndex = 2;
+			P_FrameIndex = 3;
 			P_Direction = 3;
 		}
 	}
@@ -54,10 +56,11 @@ void PlayerMoveRight(int changeDir, int SpriteNum)
 	//for some reason putting P_MovementSpeed in for 1 has problems. idk why
 	if (!CheckCollision(P_PosX + 1, P_PosY, 0, 1)) //doesn't collide
 	{
+		BulletMoveLeft(P_MovementSpeed);
 		BackgroundMoveLeft(P_MovementSpeed, SpriteNum);
 		if (changeDir)
 		{
-			P_FrameIndex = 1;
+			P_FrameIndex = 2;
 			P_Direction = 2;
 		}
 	}
@@ -68,10 +71,11 @@ void PlayerMoveLeft(int changeDir, int SpriteNum)
 {
 	if (!CheckCollision(P_PosX - P_MovementSpeed, P_PosY, 0, 0)) //doesn't collide
 	{
+		BulletMoveRight(P_MovementSpeed);
 		BackgroundMoveRight(P_MovementSpeed, SpriteNum);
 		if (changeDir)
 		{
-			P_FrameIndex = 3;
+			P_FrameIndex = 4;
 			P_Direction = 4;
 		}
 	}

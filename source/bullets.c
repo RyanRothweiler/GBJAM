@@ -19,7 +19,7 @@ int B5_SpriteID = 0;
 int B1_Using = 0;
 int B1_PosX = 0;
 int B1_PosY = 0;
-int B1_FrameIndex = 5;
+int B1_FrameIndex = 6;
 int B1_Animating = 0; 
 int B1_Dir = 0; //1 - north, 2 - east, 3 - south, 4 - west
 int B1_Dead = 0; //if this bulleth as hit something and shold be playing the death animation
@@ -28,7 +28,7 @@ int B1_Dead = 0; //if this bulleth as hit something and shold be playing the dea
 int B2_Using = 0;
 int B2_PosX = 0;
 int B2_PosY = 0;
-int B2_FrameIndex = 5;
+int B2_FrameIndex = 6;
 int B2_Animating = 0;
 int B2_Dir = 0; //1 - north, 2 - east, 3 - south, 4 - west
 int B2_Dead = 0; //if this bulleth as hit something and shold be playing the death animation
@@ -37,7 +37,7 @@ int B2_Dead = 0; //if this bulleth as hit something and shold be playing the dea
 int B3_Using = 0;
 int B3_PosX = 0;
 int B3_PosY = 0;
-int B3_FrameIndex = 5;
+int B3_FrameIndex = 6;
 int B3_Animating = 0;
 int B3_Dir = 0; //1 - north, 2 - east, 3 - south, 4 - west
 int B3_Dead = 0; //if this bulleth as hit something and shold be playing the death animation
@@ -46,7 +46,7 @@ int B3_Dead = 0; //if this bulleth as hit something and shold be playing the dea
 int B4_Using = 0;
 int B4_PosX = 0;
 int B4_PosY = 0;
-int B4_FrameIndex = 5;
+int B4_FrameIndex = 6;
 int B4_Animating = 0;
 int B4_Dir = 0; //1 - north, 2 - east, 3 - south, 4 - west
 int B4_Dead = 0; //if this bulleth as hit something and shold be playing the death animation
@@ -55,7 +55,7 @@ int B4_Dead = 0; //if this bulleth as hit something and shold be playing the dea
 int B5_Using = 0;
 int B5_PosX = 0;
 int B5_PosY = 0;
-int B5_FrameIndex = 5;
+int B5_FrameIndex = 6;
 int B5_Animating = 0;
 int B5_Dir = 0; //1 - north, 2 - east, 3 - south, 4 - west
 int B5_Dead = 0; //if this bulleth as hit something and shold be playing the death animation
@@ -64,6 +64,43 @@ int B5_Dead = 0; //if this bulleth as hit something and shold be playing the dea
 
 
 //----------------------------------------Methods
+//moves the bullets up, this is used for world moving
+void BulletMoveUp(int speed)
+{
+	if (B1_Using)
+	{
+		B1_PosY -= speed;
+	}
+}
+
+//move the bullets down, this is used for wold moving
+void BulletMoveDown(int speed)
+{
+	if (B1_Using)
+	{
+		B1_PosY += speed;
+	}
+}
+
+//move the bullets right, this is used for wold moving
+void BulletMoveRight(int speed)
+{
+	if (B1_Using)
+	{
+		B1_PosX += speed;
+	}
+}
+
+//move the bullets left, this is used for wold moving
+void BulletMoveLeft(int speed)
+{
+	if (B1_Using)
+	{
+		B1_PosX -= speed;
+	}
+}
+
+
 //this adds one to every sprite ID, thus allowing a new sprite to be added. it also set sprites for each bullet accoringly
 void BulletSlideSpriteIDsUp()
 {
@@ -201,7 +238,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			B_BulletNum--;
 			if (B1_Dir == 1) //up
 			{
-				if (B1_FrameIndex < (5 + 5)) //still alive
+				if (B1_FrameIndex < (6 + 5)) //still alive
 				{
 					B1_FrameIndex++;
 					set_sprite_tile(B1_SpriteID, B1_FrameIndex);
@@ -215,7 +252,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B1_Dir == 2) //right
 			{
-				if (B1_FrameIndex < (11 + 5)) //still alive
+				if (B1_FrameIndex < (12 + 5)) //still alive
 				{
 					B1_FrameIndex++;
 					set_sprite_tile(B1_SpriteID, B1_FrameIndex);
@@ -229,7 +266,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B1_Dir == 3) //down
 			{
-				if (B1_FrameIndex < (17 + 5)) //still alive
+				if (B1_FrameIndex < (18 + 5)) //still alive
 				{
 					B1_FrameIndex++;
 					set_sprite_tile(B1_SpriteID, B1_FrameIndex);
@@ -243,7 +280,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B1_Dir == 4) //left
 			{
-				if (B1_FrameIndex < (23 + 5)) //still alive
+				if (B1_FrameIndex < (24 + 5)) //still alive
 				{
 					B1_FrameIndex++;
 					set_sprite_tile(B1_SpriteID, B1_FrameIndex);
@@ -333,7 +370,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			B_BulletNum--;
 			if (B2_Dir == 1) //up
 			{
-				if (B2_FrameIndex < (5 + 5)) //still alive
+				if (B2_FrameIndex < (6 + 5)) //still alive
 				{
 					B2_FrameIndex++;
 					set_sprite_tile(B2_SpriteID, B2_FrameIndex);
@@ -347,7 +384,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B2_Dir == 2) //right
 			{
-				if (B2_FrameIndex < (11 + 5)) //still alive
+				if (B2_FrameIndex < (12 + 5)) //still alive
 				{
 					B2_FrameIndex++;
 					set_sprite_tile(B2_SpriteID, B2_FrameIndex);
@@ -361,7 +398,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B2_Dir == 3) //down
 			{
-				if (B2_FrameIndex < (17 + 5)) //still alive
+				if (B2_FrameIndex < (18 + 5)) //still alive
 				{
 					B2_FrameIndex++;
 					set_sprite_tile(B2_SpriteID, B2_FrameIndex);
@@ -375,7 +412,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B2_Dir == 4) //left
 			{
-				if (B2_FrameIndex < (23 + 5)) //still alive
+				if (B2_FrameIndex < (24 + 5)) //still alive
 				{
 					B2_FrameIndex++;
 					set_sprite_tile(B2_SpriteID, B2_FrameIndex);
@@ -465,7 +502,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			B_BulletNum--;
 			if (B3_Dir == 1) //up
 			{
-				if (B3_FrameIndex < (5 + 5)) //still alive
+				if (B3_FrameIndex < (6 + 5)) //still alive
 				{
 					B3_FrameIndex++;
 					set_sprite_tile(B3_SpriteID, B3_FrameIndex);
@@ -479,7 +516,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B3_Dir == 2) //right
 			{
-				if (B3_FrameIndex < (11 + 5)) //still alive
+				if (B3_FrameIndex < (12 + 5)) //still alive
 				{
 					B3_FrameIndex++;
 					set_sprite_tile(B3_SpriteID, B3_FrameIndex);
@@ -493,7 +530,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B3_Dir == 3) //down
 			{
-				if (B3_FrameIndex < (17 + 5)) //still alive
+				if (B3_FrameIndex < (18 + 5)) //still alive
 				{
 					B3_FrameIndex++;
 					set_sprite_tile(B3_SpriteID, B3_FrameIndex);
@@ -507,7 +544,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B3_Dir == 4) //left
 			{
-				if (B3_FrameIndex < (23 + 5)) //still alive
+				if (B3_FrameIndex < (24 + 5)) //still alive
 				{
 					B3_FrameIndex++;
 					set_sprite_tile(B3_SpriteID, B3_FrameIndex);
@@ -597,7 +634,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			B_BulletNum--;
 			if (B4_Dir == 1) //up
 			{
-				if (B4_FrameIndex < (5 + 5)) //still alive
+				if (B4_FrameIndex < (6 + 5)) //still alive
 				{
 					B4_FrameIndex++;
 					set_sprite_tile(B4_SpriteID, B4_FrameIndex);
@@ -611,7 +648,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B4_Dir == 2) //right
 			{
-				if (B4_FrameIndex < (11 + 5)) //still alive
+				if (B4_FrameIndex < (12 + 5)) //still alive
 				{
 					B4_FrameIndex++;
 					set_sprite_tile(B4_SpriteID, B4_FrameIndex);
@@ -625,7 +662,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B4_Dir == 3) //down
 			{
-				if (B4_FrameIndex < (17 + 5)) //still alive
+				if (B4_FrameIndex < (18 + 5)) //still alive
 				{
 					B4_FrameIndex++;
 					set_sprite_tile(B4_SpriteID, B4_FrameIndex);
@@ -639,7 +676,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B4_Dir == 4) //left
 			{
-				if (B4_FrameIndex < (23 + 5)) //still alive
+				if (B4_FrameIndex < (24 + 5)) //still alive
 				{
 					B4_FrameIndex++;
 					set_sprite_tile(B4_SpriteID, B4_FrameIndex);
@@ -728,7 +765,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			B_BulletNum--;
 			if (B5_Dir == 1) //up
 			{
-				if (B5_FrameIndex < (5 + 5)) //still alive
+				if (B5_FrameIndex < (5 + 6)) //still alive
 				{
 					B5_FrameIndex++;
 					set_sprite_tile(B5_SpriteID, B5_FrameIndex);
@@ -742,7 +779,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B5_Dir == 2) //right
 			{
-				if (B5_FrameIndex < (11 + 5)) //still alive
+				if (B5_FrameIndex < (12 + 5)) //still alive
 				{
 					B5_FrameIndex++;
 					set_sprite_tile(B5_SpriteID, B5_FrameIndex);
@@ -756,7 +793,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B5_Dir == 3) //down
 			{
-				if (B5_FrameIndex < (17 + 5)) //still alive
+				if (B5_FrameIndex < (18 + 5)) //still alive
 				{
 					B5_FrameIndex++;
 					set_sprite_tile(B5_SpriteID, B5_FrameIndex);
@@ -770,7 +807,7 @@ int BulletsUpdate() //0 - nothing, 1 - bullet died
 			}
 			if (B5_Dir == 4) //left
 			{
-				if (B5_FrameIndex < (23 + 5)) //still alive
+				if (B5_FrameIndex < (24 + 5)) //still alive
 				{
 					B5_FrameIndex++;
 					set_sprite_tile(B5_SpriteID, B5_FrameIndex);
@@ -806,23 +843,23 @@ void BulletsAdd(int x, int y, int direction)
 		//sprite stuff
 		if (B1_Dir == 1) //up
 		{
-			set_sprite_tile(0, 5);
-			B1_FrameIndex = 5;
+			set_sprite_tile(0, 6);
+			B1_FrameIndex = 6;
 		}
 		if (B1_Dir == 2) //right
 		{
-			set_sprite_tile(0, 11);
-			B1_FrameIndex = 11;
+			set_sprite_tile(0, 12);
+			B1_FrameIndex = 12;
 		}
 		if (B1_Dir == 3) //down
 		{
-			set_sprite_tile(0, 17);
-			B1_FrameIndex = 17;
+			set_sprite_tile(0, 18);
+			B1_FrameIndex = 18;
 		}
 		if (B1_Dir == 4) //left
 		{
-			set_sprite_tile(0, 23);
-			B1_FrameIndex = 23;
+			set_sprite_tile(0, 24);
+			B1_FrameIndex = 24;
 		}
 		move_sprite(0, x, y);
 		return;
@@ -844,23 +881,23 @@ void BulletsAdd(int x, int y, int direction)
 		//sprite stuff
 		if (B2_Dir == 1) //up
 		{
-			set_sprite_tile(0, 5);
-			B2_FrameIndex = 5;
+			set_sprite_tile(0, 6);
+			B2_FrameIndex = 6;
 		}
 		if (B2_Dir == 2) //right
 		{
-			set_sprite_tile(0, 11);
-			B2_FrameIndex = 11;
+			set_sprite_tile(0, 12);
+			B2_FrameIndex = 12;
 		}
 		if (B2_Dir == 3) //down
 		{
-			set_sprite_tile(0, 17);
-			B2_FrameIndex = 17;
+			set_sprite_tile(0, 18);
+			B2_FrameIndex = 18;
 		}
 		if (B2_Dir == 4) //left
 		{
-			set_sprite_tile(0, 23);
-			B2_FrameIndex = 23;
+			set_sprite_tile(0, 24);
+			B2_FrameIndex = 24;
 		}
 		move_sprite(0, x, y);
 		return;
@@ -882,23 +919,23 @@ void BulletsAdd(int x, int y, int direction)
 		//sprite stuff
 		if (B3_Dir == 1) //up
 		{
-			set_sprite_tile(0, 5);
-			B3_FrameIndex = 5;
+			set_sprite_tile(0, 6);
+			B3_FrameIndex = 6;
 		}
 		if (B3_Dir == 2) //right
 		{
-			set_sprite_tile(0, 11);
-			B3_FrameIndex = 11;
+			set_sprite_tile(0, 12);
+			B3_FrameIndex = 12;
 		}
 		if (B3_Dir == 3) //down
 		{
-			set_sprite_tile(0, 17);
-			B3_FrameIndex = 17;
+			set_sprite_tile(0, 18);
+			B3_FrameIndex = 18;
 		}
 		if (B3_Dir == 4) //left
 		{
-			set_sprite_tile(0, 23);
-			B3_FrameIndex = 23;
+			set_sprite_tile(0, 24);
+			B3_FrameIndex = 24;
 		}
 		move_sprite(0, x, y);
 		return;
@@ -920,23 +957,23 @@ void BulletsAdd(int x, int y, int direction)
 		//sprite stuff
 		if (B4_Dir == 1) //up
 		{
-			set_sprite_tile(0, 5);
-			B4_FrameIndex = 5;
+			set_sprite_tile(0, 6);
+			B4_FrameIndex = 6;
 		}
 		if (B4_Dir == 2) //right
 		{
-			set_sprite_tile(0, 11);
-			B4_FrameIndex = 11;
+			set_sprite_tile(0, 12);
+			B4_FrameIndex = 12;
 		}
 		if (B4_Dir == 3) //down
 		{
-			set_sprite_tile(0, 17);
-			B4_FrameIndex = 17;
+			set_sprite_tile(0, 18);
+			B4_FrameIndex = 18;
 		}
 		if (B4_Dir == 4) //left
 		{
-			set_sprite_tile(0, 23);
-			B4_FrameIndex = 23;
+			set_sprite_tile(0, 24);
+			B4_FrameIndex = 24;
 		}
 		move_sprite(0, x, y);
 		return;
@@ -958,23 +995,23 @@ void BulletsAdd(int x, int y, int direction)
 		//sprite stuff
 		if (B5_Dir == 1) //up
 		{
-			set_sprite_tile(0, 5);
-			B5_FrameIndex = 5;
+			set_sprite_tile(0, 6);
+			B5_FrameIndex = 6;
 		}
 		if (B5_Dir == 2) //right
 		{
-			set_sprite_tile(0, 11);
-			B5_FrameIndex = 11;
+			set_sprite_tile(0, 12);
+			B5_FrameIndex = 12;
 		}
 		if (B5_Dir == 3) //down
 		{
-			set_sprite_tile(0, 17);
-			B5_FrameIndex = 17;
+			set_sprite_tile(0, 18);
+			B5_FrameIndex = 18;
 		}
 		if (B5_Dir == 4) //left
 		{
-			set_sprite_tile(0, 23);
-			B5_FrameIndex = 23;
+			set_sprite_tile(0, 24);
+			B5_FrameIndex = 24;
 		}
 		move_sprite(0, x, y);
 		return;
